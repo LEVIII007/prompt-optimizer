@@ -3,13 +3,16 @@ package executor
 import (
 	"context"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/schema"
+	"go.uber.org/zap"
 
 	"github.com/Conversly/prompt-opt/internal/dataset"
 	"github.com/Conversly/prompt-opt/internal/llm"
+	"github.com/Conversly/prompt-opt/internal/utils"
 )
 
 const callTimeout = 90 * time.Second
@@ -33,6 +36,7 @@ func Run(ctx context.Context, m model.ToolCallingChatModel, systemPrompt string,
 	results := make([]Result, len(examples))
 	sem := make(chan struct{}, concurrency)
 	var wg sync.WaitGroup
+	var done int64
 
 	for i, ex := range examples {
 		wg.Add(1)
@@ -43,6 +47,9 @@ func Run(ctx context.Context, m model.ToolCallingChatModel, systemPrompt string,
 
 			output, err := runOne(ctx, m, systemPrompt, example, retries)
 			results[idx] = Result{Example: example, Output: output, Err: err}
+			utils.Logger().Info("task call complete",
+				zap.Int64("done", atomic.AddInt64(&done, 1)), zap.Int("total", len(examples)),
+				zap.String("example_id", example.ID), zap.Bool("error", err != nil))
 		}(i, ex)
 	}
 

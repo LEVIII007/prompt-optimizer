@@ -46,8 +46,7 @@ func main() {
 	iterationsFlag := flag.Int("iterations", 10, "max optimizer rounds")
 	minibatchSizeFlag := flag.Int("minibatch-size", 8, "examples sampled from the train set per round")
 	valSplitFlag := flag.Float64("val-split", 0.3, "fraction of the dataset held out, frozen, for the final comparison")
-	patienceFlag := flag.Int("patience", 4, "stop early after this many full-train rounds with no improvement")
-	fullEvalEveryFlag := flag.Int("full-eval-every", 3, "rounds between full-train-set rechecks")
+	patienceFlag := flag.Int("patience", 4, "stop early after this many consecutive rejected rounds; 0 disables early stopping")
 	concurrencyFlag := flag.Int("concurrency", 4, "concurrent LLM calls when scoring a batch")
 	retriesFlag := flag.Int("retries", 1, "retries per LLM call on error or invalid JSON")
 	seedFlag := flag.Int64("seed", 42, "RNG seed for the train/val split and minibatch sampling")
@@ -73,9 +72,6 @@ func main() {
 	}
 	if *patienceFlag < 0 {
 		exitf("--patience must be 0 or greater")
-	}
-	if *fullEvalEveryFlag < 1 {
-		exitf("--full-eval-every must be at least 1")
 	}
 	if *concurrencyFlag < 1 {
 		exitf("--concurrency must be at least 1")
@@ -136,15 +132,27 @@ func main() {
 		exitf("failed to create reflection model: %v", err)
 	}
 
+	if err := os.MkdirAll(*outFlag, 0o755); err != nil {
+		exitf("failed to create output directory: %v", err)
+	}
+	writeProgress := func(r *optimizer.Result) {
+		if err := os.WriteFile(filepath.Join(*outFlag, "best_prompt.txt"), []byte(r.BestPrompt), 0o644); err != nil {
+			utils.Logger().Warn("failed to checkpoint best_prompt.txt", zap.Error(err))
+		}
+		if err := utils.WriteJSON(filepath.Join(*outFlag, "run_history.json"), r); err != nil {
+			utils.Logger().Warn("failed to checkpoint run_history.json", zap.Error(err))
+		}
+	}
+
 	j := judge.New(judgeModel, r, *retriesFlag)
 	settings := optimizer.Settings{
 		Iterations:    *iterationsFlag,
 		MinibatchSize: *minibatchSizeFlag,
 		Patience:      *patienceFlag,
-		FullEvalEvery: *fullEvalEveryFlag,
 		Concurrency:   *concurrencyFlag,
 		Retries:       *retriesFlag,
 		Seed:          *seedFlag,
+		OnUpdate:      writeProgress,
 	}
 	deps := optimizer.Deps{TaskModel: taskModel, ReflectionModel: reflectionModel}
 
@@ -158,29 +166,26 @@ func main() {
 	}
 
 	for _, rec := range result.History {
-		fmt.Printf("round %d: %.3f -> %.3f (%s)\n", rec.Round, rec.PriorScore, rec.CandidateScore, acceptedLabel(rec.Accepted))
+		fmt.Printf("round %d (parent #%d): %.3f -> %.3f (%s)\n", rec.Round, rec.ParentID, rec.PriorScore, rec.CandidateScore, acceptedLabel(rec.Accepted))
 	}
+	fmt.Printf("Final pool: %d candidate(s)\n", len(result.Pool))
 
 	cmp, err := evalreport.Evaluate(ctx, taskModel, j, seedPrompt, result.BestPrompt, val, result.BestTrainScore, settings)
 	if err != nil {
 		exitf("validation comparison failed: %v", err)
 	}
 
-	if err := os.MkdirAll(*outFlag, 0o755); err != nil {
-		exitf("failed to create output directory: %v", err)
-	}
-	if err := os.WriteFile(filepath.Join(*outFlag, "best_prompt.txt"), []byte(result.BestPrompt), 0o644); err != nil {
-		exitf("failed to write best_prompt.txt: %v", err)
-	}
-	if err := utils.WriteJSON(filepath.Join(*outFlag, "run_history.json"), result); err != nil {
-		exitf("failed to write run_history.json: %v", err)
-	}
+	writeProgress(result)
 	if err := utils.WriteJSON(filepath.Join(*outFlag, "comparison_report.json"), cmp); err != nil {
 		exitf("failed to write comparison_report.json: %v", err)
 	}
 	reportMD := evalreport.RenderMarkdown(result, cmp)
 	if err := os.WriteFile(filepath.Join(*outFlag, "report.md"), []byte(reportMD), 0o644); err != nil {
 		exitf("failed to write report.md: %v", err)
+	}
+	dashboardHTML := evalreport.RenderHTML(result, cmp)
+	if err := os.WriteFile(filepath.Join(*outFlag, "dashboard.html"), []byte(dashboardHTML), 0o644); err != nil {
+		exitf("failed to write dashboard.html: %v", err)
 	}
 
 	utils.Logger().Info("optimization run complete",
@@ -196,11 +201,12 @@ func main() {
 	if cmp.TrainValGapWarning {
 		fmt.Printf("WARNING: possible overfitting - train score %.3f vs val score %.3f.\n", cmp.BestTrainScore, cmp.BestValScore)
 	}
-	fmt.Printf("Artifacts:\n- %s\n- %s\n- %s\n- %s\n",
+	fmt.Printf("Artifacts:\n- %s\n- %s\n- %s\n- %s\n- %s\n",
 		filepath.Join(*outFlag, "best_prompt.txt"),
 		filepath.Join(*outFlag, "run_history.json"),
 		filepath.Join(*outFlag, "comparison_report.json"),
 		filepath.Join(*outFlag, "report.md"),
+		filepath.Join(*outFlag, "dashboard.html"),
 	)
 }
 

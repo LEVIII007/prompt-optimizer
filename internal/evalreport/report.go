@@ -139,6 +139,8 @@ func RenderMarkdown(result *optimizer.Result, cmp *Comparison) string {
 		b.WriteString("\n")
 	}
 
+	writePoolSection(&b, result.Pool, result.BestTrainScore)
+
 	b.WriteString("## Round-by-round analysis\n\n")
 	if len(result.History) == 0 {
 		b.WriteString("_No rounds were run._\n\n")
@@ -149,6 +151,10 @@ func RenderMarkdown(result *optimizer.Result, cmp *Comparison) string {
 			status = "accepted"
 		}
 		b.WriteString(fmt.Sprintf("### Round %d - %s\n\n", rec.Round, status))
+		b.WriteString(fmt.Sprintf("- Parent: candidate `#%d`\n", rec.ParentID))
+		if rec.Accepted {
+			b.WriteString(fmt.Sprintf("- Admitted to pool as candidate `#%d`\n", rec.AcceptedID))
+		}
 		b.WriteString(fmt.Sprintf("- Minibatch score: `%.3f` -> `%.3f`\n", rec.PriorScore, rec.CandidateScore))
 		b.WriteString(fmt.Sprintf("- Analysis: %s\n\n", rec.Analysis))
 		writeWorstExamples(&b, rec.WorstExamples)
@@ -161,6 +167,33 @@ func RenderMarkdown(result *optimizer.Result, cmp *Comparison) string {
 	writeExampleTable(&b, best)
 
 	return b.String()
+}
+
+// writePoolSection lists every candidate the search ever admitted to the
+// pool - not just the winning lineage - so a reader can see what survived
+// alongside the winner, not just how the winner was found. bestTrainScore
+// is Result.BestTrainScore, a direct copy of the winning candidate's Mean,
+// so an exact float comparison reliably marks the winner without
+// recomputing the argmax here too.
+func writePoolSection(b *strings.Builder, pool []optimizer.Candidate, bestTrainScore float64) {
+	b.WriteString("## Candidate pool\n\n")
+	if len(pool) == 0 {
+		b.WriteString("_No candidates in the pool._\n\n")
+		return
+	}
+	b.WriteString("| ID | Parent | Round | Mean train score | |\n|---|---|---|---|---|\n")
+	for _, c := range pool {
+		parent := "-"
+		if c.ParentID >= 0 {
+			parent = fmt.Sprintf("#%d", c.ParentID)
+		}
+		marker := ""
+		if c.Mean == bestTrainScore {
+			marker = "**winner**"
+		}
+		b.WriteString(fmt.Sprintf("| #%d | %s | %d | %.3f | %s |\n", c.ID, parent, c.Round, c.Mean, marker))
+	}
+	b.WriteString("\n")
 }
 
 func hasRealCategories(byCategory map[string]float64) bool {

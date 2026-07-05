@@ -118,10 +118,15 @@ func TestMergePerExampleZipsByIndex(t *testing.T) {
 
 func TestRenderMarkdownIncludesKeySections(t *testing.T) {
 	result := &optimizer.Result{
-		SeedPrompt: "seed",
-		BestPrompt: "best",
+		SeedPrompt:     "seed",
+		BestPrompt:     "best",
+		BestTrainScore: 0.9,
+		Pool: []optimizer.Candidate{
+			{ID: 0, Prompt: "seed", ParentID: -1, Round: 0, Mean: 0.3},
+			{ID: 1, Prompt: "best", ParentID: 0, Round: 1, Mean: 0.9},
+		},
 		History: []optimizer.IterationRecord{
-			{Round: 1, Accepted: true, PriorScore: 0.3, CandidateScore: 0.7, Analysis: "fixed tone", WorstExamples: []optimizer.JudgedExample{
+			{Round: 1, ParentID: 0, Accepted: true, AcceptedID: 1, PriorScore: 0.3, CandidateScore: 0.7, Analysis: "fixed tone", WorstExamples: []optimizer.JudgedExample{
 				{Example: dataset.Example{ID: "v1", Category: "refund"}, Output: "sorry, no refunds ever", Verdict: &judge.Verdict{Overall: 0.3, Feedback: "too rigid, ignores exceptions"}},
 			}},
 		},
@@ -142,7 +147,10 @@ func TestRenderMarkdownIncludesKeySections(t *testing.T) {
 
 	md := RenderMarkdown(result, cmp)
 
-	for _, want := range []string{"Prompt Optimization Report", "Warning", "refund", "Round 1", "fixed tone", "v1", "ignores exceptions", "no refunds ever"} {
+	for _, want := range []string{
+		"Prompt Optimization Report", "Warning", "refund", "Round 1", "fixed tone", "v1", "ignores exceptions", "no refunds ever",
+		"Candidate pool", "#1", "winner", "Admitted to pool as candidate `#1`",
+	} {
 		if !strings.Contains(md, want) {
 			t.Errorf("expected markdown report to contain %q, got:\n%s", want, md)
 		}
