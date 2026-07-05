@@ -22,8 +22,11 @@ You will be shown the current system prompt and a set of examples where it produ
 
 Task:
 1. Diagnose the recurring pattern(s) behind these failures. Be specific about what instruction is missing, ambiguous, or wrong in the current prompt - not just what went wrong in one example.
-2. Rewrite the ENTIRE system prompt to fix these patterns while preserving everything that already works. Generalize the fix; do not patch in a rule that only matches the literal examples shown.
-3. Do not remove instructions unrelated to the diagnosed failures.
+2. Rewrite the ENTIRE system prompt to fix these patterns. Generalize the fix; do not patch in a rule that only matches the literal examples shown.
+3. Prefer editing or merging existing instructions over appending new ones. If a new rule overlaps with or restates something already in the prompt, fold it into that existing instruction instead of adding a separate section - do not grow the prompt just to say the same thing in different words.
+4. Keep the prompt as short as it can be while still fixing the diagnosed failures. A long, checklist-heavy prompt is usually a symptom of unmerged, overlapping rules, not thoroughness - actively look for redundant or overlapping instructions already in the prompt and consolidate them, even if they weren't the cause of this round's failures.
+5. Do not let a new rule bury or override a higher-priority default in some situations (for example, a rigid "always state policy/facts first" instruction should not push safety guidance, empathy, or a direct answer to the customer's actual question further down the response). If a new rule could conflict with an existing one, say explicitly which one takes precedence and when.
+6. Do not remove behavioral coverage unrelated to the diagnosed failures - only remove or merge instructions that are redundant restatements of something already covered, not instructions that handle a distinct case.
 
 Return ONLY valid JSON in this shape:
 {
