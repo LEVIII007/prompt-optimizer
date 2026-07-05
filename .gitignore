@@ -1,0 +1,5 @@
+# secrets — never commit real credentials
+.env
+
+# optimizer run artifacts
+/tmp/

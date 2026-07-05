@@ -1,0 +1,40 @@
+{
+  "pass_threshold": 0.7,
+  "dimensions": [
+    {
+      "name": "policy_accuracy",
+      "description": "Do the factual and policy claims in the response match the reference/ground-truth policy (return windows, fees, timelines, eligibility, etc.)? Score 0 if it states a policy that contradicts the reference. Score 5 only if every policy detail it gives is correct.",
+      "scale": 5,
+      "weight": 4,
+      "required": true
+    },
+    {
+      "name": "grounding",
+      "description": "Does the response avoid inventing policies, numbers, or facts that are not supported by the reference? When the answer is not covered by policy, the response must admit it doesn't have that information and offer to connect a human, rather than fabricating an answer. Score 0 for any confidently-made-up policy or fabricated detail.",
+      "scale": 5,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "name": "escalation",
+      "description": "Does the response route the request correctly? Safety issues, disputes over $500, fraud, legal threats, and anything outside documented policy should be escalated to a human specialist; routine in-policy questions should be answered directly rather than needlessly escalated. Score 5 for the correct routing decision, 0 for the wrong one (e.g. trying to resolve a safety/legal issue itself, or escalating a trivial question).",
+      "scale": 5,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "name": "tone",
+      "description": "Is the response warm, professional, and appropriately empathetic — especially on complaints, damage, and frustrated customers? Score low for robotic, dismissive, or tone-deaf replies to an upset customer.",
+      "scale": 5,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "name": "completeness_clarity",
+      "description": "Does the response address every part of the customer's question, and is it clear, concise, and easy to act on (specific next steps where relevant)? Score low for partial answers or rambling, hard-to-follow replies.",
+      "scale": 5,
+      "weight": 2,
+      "required": false
+    }
+  ]
+}

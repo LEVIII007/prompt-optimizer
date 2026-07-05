@@ -1,0 +1,51 @@
+[
+  {
+    "id": "refund-001",
+    "category": "refund_policy",
+    "input": "Can I get a refund if it's been 40 days since I bought this?",
+    "reference": "Refunds are only available within 30 days of the original purchase date. After 30 days, items are not eligible for a refund but may qualify for store credit at management's discretion.",
+    "notes": "edge case: past the refund window"
+  },
+  {
+    "id": "refund-002",
+    "category": "refund_policy",
+    "input": "I bought a jacket 5 days ago but changed my mind. How do I return it?",
+    "reference": "Refunds are only available within 30 days of the original purchase date. To start a return, the customer should use the 'Returns' section of their order history to generate a prepaid shipping label."
+  },
+  {
+    "id": "refund-003",
+    "category": "refund_policy",
+    "input": "The shirt I received is the wrong size. Can I exchange it instead of a refund?",
+    "reference": "Exchanges for a different size are allowed within 30 days of purchase and do not require a refund to be processed first; customers can request a direct size exchange."
+  },
+  {
+    "id": "refund-004",
+    "category": "refund_policy",
+    "input": "Do I get my shipping fee back if I return an item?",
+    "reference": "Original shipping fees are non-refundable unless the return is due to a defective or incorrect item shipped by the company."
+  },
+  {
+    "id": "shipping-001",
+    "category": "shipping",
+    "input": "How long does standard shipping usually take?",
+    "reference": "Standard shipping takes 5-7 business days within the continental United States. Expedited shipping takes 2-3 business days."
+  },
+  {
+    "id": "shipping-002",
+    "category": "shipping",
+    "input": "My order says it shipped 10 days ago but tracking hasn't updated. What should I do?",
+    "reference": "If tracking has not updated for more than 5 business days after a shipping notification, customers should be told the package may be delayed in transit and offered escalation to a human support agent to investigate with the carrier."
+  },
+  {
+    "id": "shipping-003",
+    "category": "shipping",
+    "input": "Can you ship to a PO box?",
+    "reference": "Standard shipping supports PO boxes, but expedited and international shipping do not support PO box delivery addresses."
+  },
+  {
+    "id": "shipping-004",
+    "category": "shipping",
+    "input": "I need this order to arrive by Friday for a birthday gift, is that possible?",
+    "reference": "Expedited shipping (2-3 business days) can be selected at checkout for time-sensitive orders; the company cannot guarantee arrival dates for standard shipping."
+  }
+]

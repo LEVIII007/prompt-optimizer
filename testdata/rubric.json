@@ -1,0 +1,26 @@
+{
+  "dimensions": [
+    {
+      "name": "policy_accuracy",
+      "description": "States the correct policy, grounded in the reference, without inventing details not present there.",
+      "scale": 1,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "name": "tone",
+      "description": "Professional, empathetic, and not robotic.",
+      "scale": 5,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "name": "clarity",
+      "description": "Directly answers the question asked, without rambling or irrelevant information.",
+      "scale": 5,
+      "weight": 1,
+      "required": false
+    }
+  ],
+  "pass_threshold": 0.7
+}

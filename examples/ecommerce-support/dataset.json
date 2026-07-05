@@ -1,0 +1,258 @@
+[
+  {
+    "id": "returns-001",
+    "category": "returns",
+    "input": "I want to return a blender I got about 3 weeks ago. It works fine, I just don't need it anymore. Can I?",
+    "reference": "Most items can be returned within 30 days of the delivery date. The item must be unused and in its original packaging with all accessories. Since this is a non-defective 'changed my mind' return, a $6.99 return shipping fee is deducted from the refund. Returns are started in Order History > Returns to generate a prepaid label.",
+    "notes": "In-window standard return; correct answer should mention the 30-day window AND the $6.99 fee for non-defective returns."
+  },
+  {
+    "id": "returns-002",
+    "category": "returns",
+    "input": "Can I return these headphones? I bought them 20 days ago.",
+    "reference": "Electronics have a shorter 15-day return window (not the standard 30 days). At 20 days, the headphones are past the electronics return window and are no longer eligible for return.",
+    "notes": "Trap: tempting to quote the standard 30-day window. Electronics window is 15 days, so 20 days is NOT eligible."
+  },
+  {
+    "id": "returns-003",
+    "category": "returns",
+    "input": "I opened the box but the toaster is completely unused. Can I still return it within the month?",
+    "reference": "Yes. Items are returnable within 30 days if they are unused and in original packaging with all accessories. A box that has been opened is fine as long as the item itself is unused and complete.",
+    "notes": "Opened-but-unused is acceptable within 30 days."
+  },
+  {
+    "id": "returns-004",
+    "category": "returns",
+    "input": "I bought a $50 gift card and want to return it for cash.",
+    "reference": "Gift cards are final-sale items and are non-returnable and non-refundable. Other final-sale categories include clearance items and opened personal-care/hygiene products.",
+    "notes": "Final-sale item; must not offer a refund."
+  },
+  {
+    "id": "refunds-001",
+    "category": "refunds",
+    "input": "How long until I actually see my money back after I send the return?",
+    "reference": "Refunds are issued to the original payment method within 5-7 business days after the returned item is received and inspected.",
+    "notes": "Timing must be 5-7 business days after receipt/inspection."
+  },
+  {
+    "id": "refunds-002",
+    "category": "refunds",
+    "input": "When I return this, do I get the original shipping charge back too?",
+    "reference": "Original outbound shipping fees are non-refundable unless the return is because the item was defective, damaged, or the wrong item was sent.",
+    "notes": "Shipping fee is non-refundable for change-of-mind returns."
+  },
+  {
+    "id": "refunds-003",
+    "category": "refunds",
+    "input": "I paid using a Meridian gift card. How will my refund come back to me?",
+    "reference": "Purchases made with a Meridian gift card are refunded as store credit, not as cash or to a bank account.",
+    "notes": "Gift-card purchases refund to store credit."
+  },
+  {
+    "id": "shipping-001",
+    "category": "shipping",
+    "input": "How much does shipping cost and how long does it take?",
+    "reference": "Standard shipping is $5.99 and takes 3-5 business days (free on orders over $49). Express is $14.99 and takes 2 business days. Overnight is $24.99 and arrives the next business day. Meridian ships to the US and Canada only.",
+    "notes": "Full shipping options with prices and speeds."
+  },
+  {
+    "id": "shipping-002",
+    "category": "shipping",
+    "input": "If I place my order now, at 11am ET on a Tuesday, does it go out today?",
+    "reference": "Orders placed before 2:00 PM ET on a business day ship the same day. An 11am ET Tuesday order will ship that same day.",
+    "notes": "Same-day cutoff is 2 PM ET on business days."
+  },
+  {
+    "id": "shipping-003",
+    "category": "shipping",
+    "input": "Do you deliver to Canada?",
+    "reference": "Meridian ships to the United States and Canada only. It does not ship anywhere else internationally.",
+    "notes": "Ships US + Canada only."
+  },
+  {
+    "id": "shipping-004",
+    "category": "shipping",
+    "input": "Can you overnight this to my PO box?",
+    "reference": "Only Standard shipping delivers to PO boxes. Express and Overnight shipping cannot be delivered to PO box addresses.",
+    "notes": "Grounding trap: must NOT claim overnight-to-PO-box works. Only Standard serves PO boxes."
+  },
+  {
+    "id": "order_changes-001",
+    "category": "order_changes",
+    "input": "I placed an order about 10 minutes ago. Can I change the shipping address?",
+    "reference": "Orders can be modified or cancelled within 60 minutes of being placed, before they enter fulfillment. At 10 minutes, the customer is still within the window and can change the address.",
+    "notes": "Within the 60-minute change window."
+  },
+  {
+    "id": "order_changes-002",
+    "category": "order_changes",
+    "input": "I ordered yesterday but want to cancel. Can you cancel it?",
+    "reference": "Orders can only be cancelled within 60 minutes of being placed. An order placed yesterday is past that window and cannot be cancelled; the customer would need to receive it and then return it under the return policy.",
+    "notes": "Past the 60-minute window; correct path is receive-then-return."
+  },
+  {
+    "id": "order_changes-003",
+    "category": "order_changes",
+    "input": "Can you add another item to the order I just placed so it ships together?",
+    "reference": "Orders cannot have items added after they are placed. Modifications are only possible within the 60-minute window and adding items is not supported; the customer should place a separate order.",
+    "notes": "Cannot add items post-placement; place a separate order."
+  },
+  {
+    "id": "damaged-001",
+    "category": "damaged_defective",
+    "input": "My package just arrived and the ceramic mug inside is completely shattered. What do I do?",
+    "reference": "Damaged items should be reported within 48 hours of delivery with photos of the damage. Meridian will provide a free replacement or a full refund including original shipping, at no cost to the customer.",
+    "notes": "Empathy expected. Report within 48h with photos; free replacement or full refund incl. shipping."
+  },
+  {
+    "id": "damaged-002",
+    "category": "damaged_defective",
+    "input": "The laptop screen was already cracked when I opened the box. I received it 4 days ago though, I've been busy.",
+    "reference": "Damage should normally be reported within 48 hours of delivery with photos. This report is past the 48-hour window and it is a high-value defective item, so rather than a flat denial the assistant should acknowledge the situation with empathy and connect the customer to a human specialist to review the case.",
+    "notes": "Past the 48h window + high value → empathy + escalate, don't flatly deny or auto-approve."
+  },
+  {
+    "id": "damaged-003",
+    "category": "damaged_defective",
+    "input": "The item I got is defective. Do I have to pay for return shipping?",
+    "reference": "No. When an item is defective, damaged, or the wrong item was sent, return shipping is free and no return-shipping fee is deducted.",
+    "notes": "Defective returns ship free."
+  },
+  {
+    "id": "warranty-001",
+    "category": "warranty",
+    "input": "My headphones stopped working after 6 months. Are they covered by any warranty?",
+    "reference": "Electronics carry a 1-year manufacturer warranty. At 6 months they are within coverage. Meridian does not repair items itself but will help the customer file a claim with the manufacturer.",
+    "notes": "1-year manufacturer warranty on electronics; Meridian facilitates, doesn't repair."
+  },
+  {
+    "id": "warranty-002",
+    "category": "warranty",
+    "input": "Does Meridian repair TVs in-house if something goes wrong?",
+    "reference": "Meridian does not perform repairs in-house. Electronics are covered by a 1-year manufacturer warranty, and Meridian helps the customer file the claim with the manufacturer who handles the repair.",
+    "notes": "No in-house repair; manufacturer warranty."
+  },
+  {
+    "id": "warranty-003",
+    "category": "warranty",
+    "input": "Is there a warranty on the blender I bought from you?",
+    "reference": "Meridian's 1-year warranty coverage applies to electronics. A blender is a home good, and Meridian does not offer its own warranty on non-electronics. If the specific product's coverage is unclear, the assistant should say it isn't certain and offer to check rather than inventing warranty terms.",
+    "notes": "Grounding trap: don't fabricate a warranty for a non-electronic; admit uncertainty / offer to check."
+  },
+  {
+    "id": "price_match-001",
+    "category": "price_match",
+    "input": "A competitor is selling this exact item for $30 less. Will you match their price?",
+    "reference": "Meridian matches a competitor's lower price within 14 days of purchase for the identical item that is in stock at the competitor. The policy excludes third-party/marketplace sellers, refurbished items, and clearance.",
+    "notes": "14-day price match for identical in-stock item, with exclusions."
+  },
+  {
+    "id": "price_match-002",
+    "category": "price_match",
+    "input": "I found it cheaper from a third-party seller on a marketplace. Can you match that?",
+    "reference": "Price matching excludes third-party and marketplace sellers, so a marketplace third-party price is not eligible for a price match.",
+    "notes": "Marketplace third-party sellers are excluded."
+  },
+  {
+    "id": "price_match-003",
+    "category": "price_match",
+    "input": "The price on your own site dropped 3 days after I bought it. Can I get the difference?",
+    "reference": "Meridian offers a one-time price adjustment if its own price drops within 14 days of purchase. The difference is refunded to the original payment method. At 3 days, the customer is eligible.",
+    "notes": "Own-price-drop adjustment within 14 days."
+  },
+  {
+    "id": "membership-001",
+    "category": "membership",
+    "input": "What do I actually get with Meridian+ and how much does it cost?",
+    "reference": "Meridian+ costs $49 per year. Benefits include free Express shipping, an extended 60-day return window, early access to sales, and a birthday reward.",
+    "notes": "Meridian+ price and benefit list."
+  },
+  {
+    "id": "membership-002",
+    "category": "membership",
+    "input": "If I cancel Meridian+ partway through the year, do I get a prorated refund?",
+    "reference": "Meridian+ can be cancelled anytime, but prorated refunds are not offered. Access and benefits continue until the end of the paid term.",
+    "notes": "No prorated refund; access continues to end of term."
+  },
+  {
+    "id": "membership-003",
+    "category": "membership",
+    "input": "Does being a Meridian+ member give me longer to return things?",
+    "reference": "Yes. Meridian+ members get an extended 60-day return window, compared to the standard 30-day window for non-members.",
+    "notes": "Member extended returns: 60 days vs 30."
+  },
+  {
+    "id": "promo-001",
+    "category": "promo_codes",
+    "input": "Can I use two promo codes on the same order?",
+    "reference": "Only one promo code can be used per order. Promo codes cannot be stacked or combined with each other.",
+    "notes": "One promo code per order; no stacking."
+  },
+  {
+    "id": "promo-002",
+    "category": "promo_codes",
+    "input": "I forgot to enter my discount code before checking out. Can you apply it now that the order is placed?",
+    "reference": "Promo codes cannot be applied after an order has been placed. The code must be entered at checkout before the order is submitted.",
+    "notes": "No retroactive promo application."
+  },
+  {
+    "id": "promo-003",
+    "category": "promo_codes",
+    "input": "I'm a Meridian+ member. Does my member discount stack with a promo code?",
+    "reference": "Meridian+ benefits stack with sale prices but do not stack with promo codes. A promo code cannot be combined with the member discount on the same order.",
+    "notes": "Member benefit stacks with sales, not with promo codes."
+  },
+  {
+    "id": "payment-001",
+    "category": "payment",
+    "input": "What payment methods do you accept?",
+    "reference": "Meridian accepts Visa, Mastercard, American Express, Discover, PayPal, and Meridian gift cards. Cash on delivery (COD) is not accepted.",
+    "notes": "Accepted methods list; no COD."
+  },
+  {
+    "id": "payment-002",
+    "category": "payment",
+    "input": "When does my card actually get charged - right when I order, or when it ships?",
+    "reference": "Cards are charged at the time the order ships, not when the order is placed.",
+    "notes": "Charged at shipment, not placement."
+  },
+  {
+    "id": "payment-003",
+    "category": "payment",
+    "input": "Do you offer any buy-now-pay-later option?",
+    "reference": "Meridian offers buy-now-pay-later through Affirm on orders over $50.",
+    "notes": "Affirm BNPL on orders over $50."
+  },
+  {
+    "id": "escalation-001",
+    "category": "escalation",
+    "input": "This is the THIRD time my order has come wrong, and it's a $700 custom setup. I want this fixed right now.",
+    "reference": "This is a dispute over $500 combined with a repeated-failure complaint. The correct action is to acknowledge the frustration with genuine empathy and connect the customer to a human specialist to resolve it, rather than attempting to resolve a high-value dispute autonomously.",
+    "history": [
+      { "role": "user", "content": "My order #48812 arrived wrong again." },
+      { "role": "assistant", "content": "I'm sorry to hear that. Could you tell me what was wrong with this order?" }
+    ],
+    "notes": "High-value (>$500) + repeat failure → empathize + escalate to human."
+  },
+  {
+    "id": "escalation-002",
+    "category": "escalation",
+    "input": "The battery in the e-scooter I bought from you is smoking and got really hot. What should I do?",
+    "reference": "This is a safety issue. The assistant should advise the customer to stop using the product immediately, prioritize their safety, and connect them urgently to a human safety specialist. It must not casually troubleshoot an overheating battery as a routine issue.",
+    "notes": "Safety hazard → urgent escalation + safety-first guidance, not casual troubleshooting."
+  },
+  {
+    "id": "escalation-003",
+    "category": "escalation",
+    "input": "Do you offer corporate bulk discounts if I want to buy 500 units?",
+    "reference": "Bulk and corporate pricing is not a documented self-serve policy. The assistant should say it does not have that information and offer to connect the customer with the sales/specialist team, rather than inventing any discount terms.",
+    "notes": "Grounding + escalation: must NOT fabricate a bulk discount; route to sales."
+  },
+  {
+    "id": "escalation-004",
+    "category": "escalation",
+    "input": "I've had it with you people. I'm going to take legal action over this.",
+    "reference": "A legal threat should be handled by de-escalating with empathy and handing the conversation to a human specialist. The assistant must not make legal commitments, admit or deny liability, or argue with the customer.",
+    "notes": "Legal threat → empathize, hand to human, no legal commitments."
+  }
+]

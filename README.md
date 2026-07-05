@@ -112,3 +112,4 @@ scripted mock chat model — it does not call Azure OpenAI. It cannot tell you
 whether the optimizer improves real prompts; that only shows up once you run
 it against real credentials and real data.
 # prompt-optimizer
+# prompt-optimizer
